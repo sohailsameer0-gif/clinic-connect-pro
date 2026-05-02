@@ -9,38 +9,326 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PatientRouteImport } from './routes/patient'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ForClinicsRouteImport } from './routes/for-clinics'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ClinicsRouteImport } from './routes/clinics'
+import { Route as ClinicRouteImport } from './routes/clinic'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PatientProfileRouteImport } from './routes/patient.profile'
+import { Route as ClinicOnboardingRouteImport } from './routes/clinic.onboarding'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatientRoute = PatientRouteImport.update({
+  id: '/patient',
+  path: '/patient',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForClinicsRoute = ForClinicsRouteImport.update({
+  id: '/for-clinics',
+  path: '/for-clinics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicsRoute = ClinicsRouteImport.update({
+  id: '/clinics',
+  path: '/clinics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicRoute = ClinicRouteImport.update({
+  id: '/clinic',
+  path: '/clinic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PatientProfileRoute = PatientProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PatientRoute,
+} as any)
+const ClinicOnboardingRoute = ClinicOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => ClinicRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/clinic': typeof ClinicRouteWithChildren
+  '/clinics': typeof ClinicsRoute
+  '/contact': typeof ContactRoute
+  '/for-clinics': typeof ForClinicsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/patient': typeof PatientRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
+  '/search': typeof SearchRoute
+  '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
+  '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/patient/profile': typeof PatientProfileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/clinic': typeof ClinicRouteWithChildren
+  '/clinics': typeof ClinicsRoute
+  '/contact': typeof ContactRoute
+  '/for-clinics': typeof ForClinicsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/patient': typeof PatientRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
+  '/search': typeof SearchRoute
+  '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
+  '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/patient/profile': typeof PatientProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/clinic': typeof ClinicRouteWithChildren
+  '/clinics': typeof ClinicsRoute
+  '/contact': typeof ContactRoute
+  '/for-clinics': typeof ForClinicsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/patient': typeof PatientRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
+  '/search': typeof SearchRoute
+  '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
+  '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/patient/profile': typeof PatientProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/clinic'
+    | '/clinics'
+    | '/contact'
+    | '/for-clinics'
+    | '/forgot-password'
+    | '/login'
+    | '/patient'
+    | '/reset-password'
+    | '/search'
+    | '/signup'
+    | '/terms'
+    | '/clinic/onboarding'
+    | '/patient/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/clinic'
+    | '/clinics'
+    | '/contact'
+    | '/for-clinics'
+    | '/forgot-password'
+    | '/login'
+    | '/patient'
+    | '/reset-password'
+    | '/search'
+    | '/signup'
+    | '/terms'
+    | '/clinic/onboarding'
+    | '/patient/profile'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/clinic'
+    | '/clinics'
+    | '/contact'
+    | '/for-clinics'
+    | '/forgot-password'
+    | '/login'
+    | '/patient'
+    | '/reset-password'
+    | '/search'
+    | '/signup'
+    | '/terms'
+    | '/clinic/onboarding'
+    | '/patient/profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
+  ClinicRoute: typeof ClinicRouteWithChildren
+  ClinicsRoute: typeof ClinicsRoute
+  ContactRoute: typeof ContactRoute
+  ForClinicsRoute: typeof ForClinicsRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  PatientRoute: typeof PatientRouteWithChildren
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SearchRoute: typeof SearchRoute
+  SignupRoute: typeof SignupRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patient': {
+      id: '/patient'
+      path: '/patient'
+      fullPath: '/patient'
+      preLoaderRoute: typeof PatientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-clinics': {
+      id: '/for-clinics'
+      path: '/for-clinics'
+      fullPath: '/for-clinics'
+      preLoaderRoute: typeof ForClinicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinics': {
+      id: '/clinics'
+      path: '/clinics'
+      fullPath: '/clinics'
+      preLoaderRoute: typeof ClinicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinic': {
+      id: '/clinic'
+      path: '/clinic'
+      fullPath: '/clinic'
+      preLoaderRoute: typeof ClinicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +336,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/patient/profile': {
+      id: '/patient/profile'
+      path: '/profile'
+      fullPath: '/patient/profile'
+      preLoaderRoute: typeof PatientProfileRouteImport
+      parentRoute: typeof PatientRoute
+    }
+    '/clinic/onboarding': {
+      id: '/clinic/onboarding'
+      path: '/onboarding'
+      fullPath: '/clinic/onboarding'
+      preLoaderRoute: typeof ClinicOnboardingRouteImport
+      parentRoute: typeof ClinicRoute
+    }
   }
 }
 
+interface ClinicRouteChildren {
+  ClinicOnboardingRoute: typeof ClinicOnboardingRoute
+}
+
+const ClinicRouteChildren: ClinicRouteChildren = {
+  ClinicOnboardingRoute: ClinicOnboardingRoute,
+}
+
+const ClinicRouteWithChildren =
+  ClinicRoute._addFileChildren(ClinicRouteChildren)
+
+interface PatientRouteChildren {
+  PatientProfileRoute: typeof PatientProfileRoute
+}
+
+const PatientRouteChildren: PatientRouteChildren = {
+  PatientProfileRoute: PatientProfileRoute,
+}
+
+const PatientRouteWithChildren =
+  PatientRoute._addFileChildren(PatientRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
+  ClinicRoute: ClinicRouteWithChildren,
+  ClinicsRoute: ClinicsRoute,
+  ContactRoute: ContactRoute,
+  ForClinicsRoute: ForClinicsRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  PatientRoute: PatientRouteWithChildren,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SearchRoute: SearchRoute,
+  SignupRoute: SignupRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
