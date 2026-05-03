@@ -1,3 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "./search";
-export const Route = createFileRoute("/clinics")({ component: () => <ComingSoon title="Browse clinics" /> });
+import { createFileRoute, redirect } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/clinics")({
+  beforeLoad: () => { throw redirect({ to: "/search" }); },
+  component: () => null,
+});

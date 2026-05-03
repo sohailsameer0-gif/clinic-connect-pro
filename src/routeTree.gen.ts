@@ -24,10 +24,13 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PatientIndexRouteImport } from './routes/patient.index'
+import { Route as ClinicIndexRouteImport } from './routes/clinic.index'
 import { Route as PatientProfileRouteImport } from './routes/patient.profile'
 import { Route as PatientFavoritesRouteImport } from './routes/patient.favorites'
 import { Route as PatientAppointmentsRouteImport } from './routes/patient.appointments'
 import { Route as ClinicOnboardingRouteImport } from './routes/clinic.onboarding'
+import { Route as CSlugRouteImport } from './routes/c.$slug'
+import { Route as BookDoctorIdRouteImport } from './routes/book.$doctorId'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -104,6 +107,11 @@ const PatientIndexRoute = PatientIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PatientRoute,
 } as any)
+const ClinicIndexRoute = ClinicIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ClinicRoute,
+} as any)
 const PatientProfileRoute = PatientProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -124,6 +132,16 @@ const ClinicOnboardingRoute = ClinicOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => ClinicRoute,
 } as any)
+const CSlugRoute = CSlugRouteImport.update({
+  id: '/c/$slug',
+  path: '/c/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookDoctorIdRoute = BookDoctorIdRouteImport.update({
+  id: '/book/$doctorId',
+  path: '/book/$doctorId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -140,17 +158,19 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/book/$doctorId': typeof BookDoctorIdRoute
+  '/c/$slug': typeof CSlugRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
+  '/clinic/': typeof ClinicIndexRoute
   '/patient/': typeof PatientIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/clinic': typeof ClinicRouteWithChildren
   '/clinics': typeof ClinicsRoute
   '/contact': typeof ContactRoute
   '/for-clinics': typeof ForClinicsRoute
@@ -160,10 +180,13 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/book/$doctorId': typeof BookDoctorIdRoute
+  '/c/$slug': typeof CSlugRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
+  '/clinic': typeof ClinicIndexRoute
   '/patient': typeof PatientIndexRoute
 }
 export interface FileRoutesById {
@@ -182,10 +205,13 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/book/$doctorId': typeof BookDoctorIdRoute
+  '/c/$slug': typeof CSlugRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
+  '/clinic/': typeof ClinicIndexRoute
   '/patient/': typeof PatientIndexRoute
 }
 export interface FileRouteTypes {
@@ -205,17 +231,19 @@ export interface FileRouteTypes {
     | '/search'
     | '/signup'
     | '/terms'
+    | '/book/$doctorId'
+    | '/c/$slug'
     | '/clinic/onboarding'
     | '/patient/appointments'
     | '/patient/favorites'
     | '/patient/profile'
+    | '/clinic/'
     | '/patient/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/admin'
-    | '/clinic'
     | '/clinics'
     | '/contact'
     | '/for-clinics'
@@ -225,10 +253,13 @@ export interface FileRouteTypes {
     | '/search'
     | '/signup'
     | '/terms'
+    | '/book/$doctorId'
+    | '/c/$slug'
     | '/clinic/onboarding'
     | '/patient/appointments'
     | '/patient/favorites'
     | '/patient/profile'
+    | '/clinic'
     | '/patient'
   id:
     | '__root__'
@@ -246,10 +277,13 @@ export interface FileRouteTypes {
     | '/search'
     | '/signup'
     | '/terms'
+    | '/book/$doctorId'
+    | '/c/$slug'
     | '/clinic/onboarding'
     | '/patient/appointments'
     | '/patient/favorites'
     | '/patient/profile'
+    | '/clinic/'
     | '/patient/'
   fileRoutesById: FileRoutesById
 }
@@ -268,6 +302,8 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SignupRoute: typeof SignupRoute
   TermsRoute: typeof TermsRoute
+  BookDoctorIdRoute: typeof BookDoctorIdRoute
+  CSlugRoute: typeof CSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -377,6 +413,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatientIndexRouteImport
       parentRoute: typeof PatientRoute
     }
+    '/clinic/': {
+      id: '/clinic/'
+      path: '/'
+      fullPath: '/clinic/'
+      preLoaderRoute: typeof ClinicIndexRouteImport
+      parentRoute: typeof ClinicRoute
+    }
     '/patient/profile': {
       id: '/patient/profile'
       path: '/profile'
@@ -405,15 +448,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClinicOnboardingRouteImport
       parentRoute: typeof ClinicRoute
     }
+    '/c/$slug': {
+      id: '/c/$slug'
+      path: '/c/$slug'
+      fullPath: '/c/$slug'
+      preLoaderRoute: typeof CSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book/$doctorId': {
+      id: '/book/$doctorId'
+      path: '/book/$doctorId'
+      fullPath: '/book/$doctorId'
+      preLoaderRoute: typeof BookDoctorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface ClinicRouteChildren {
   ClinicOnboardingRoute: typeof ClinicOnboardingRoute
+  ClinicIndexRoute: typeof ClinicIndexRoute
 }
 
 const ClinicRouteChildren: ClinicRouteChildren = {
   ClinicOnboardingRoute: ClinicOnboardingRoute,
+  ClinicIndexRoute: ClinicIndexRoute,
 }
 
 const ClinicRouteWithChildren =
@@ -451,6 +510,8 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SignupRoute: SignupRoute,
   TermsRoute: TermsRoute,
+  BookDoctorIdRoute: BookDoctorIdRoute,
+  CSlugRoute: CSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
