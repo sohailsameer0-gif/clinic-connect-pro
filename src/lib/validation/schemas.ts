@@ -67,7 +67,7 @@ export const doctorSchema = z.object({
 
 export const serviceSchema = z.object({
   name: z.string().trim().min(2).max(120),
-  category: z.string().trim().max(80).default("general"),
+  category: z.string().trim().min(1).max(80),
   description: z.string().max(800).optional().or(z.literal("")),
   price: z.coerce.number().min(0),
   duration_min: z.coerce.number().int().min(5).max(480),

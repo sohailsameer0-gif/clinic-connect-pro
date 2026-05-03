@@ -28,7 +28,14 @@ import { Route as ClinicIndexRouteImport } from './routes/clinic.index'
 import { Route as PatientProfileRouteImport } from './routes/patient.profile'
 import { Route as PatientFavoritesRouteImport } from './routes/patient.favorites'
 import { Route as PatientAppointmentsRouteImport } from './routes/patient.appointments'
+import { Route as ClinicStaffRouteImport } from './routes/clinic.staff'
+import { Route as ClinicSettingsRouteImport } from './routes/clinic.settings'
+import { Route as ClinicServicesRouteImport } from './routes/clinic.services'
+import { Route as ClinicSchedulesRouteImport } from './routes/clinic.schedules'
+import { Route as ClinicReviewsRouteImport } from './routes/clinic.reviews'
 import { Route as ClinicOnboardingRouteImport } from './routes/clinic.onboarding'
+import { Route as ClinicDoctorsRouteImport } from './routes/clinic.doctors'
+import { Route as ClinicAppointmentsRouteImport } from './routes/clinic.appointments'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as BookDoctorIdRouteImport } from './routes/book.$doctorId'
 
@@ -127,9 +134,44 @@ const PatientAppointmentsRoute = PatientAppointmentsRouteImport.update({
   path: '/appointments',
   getParentRoute: () => PatientRoute,
 } as any)
+const ClinicStaffRoute = ClinicStaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicSettingsRoute = ClinicSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicServicesRoute = ClinicServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicSchedulesRoute = ClinicSchedulesRouteImport.update({
+  id: '/schedules',
+  path: '/schedules',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicReviewsRoute = ClinicReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => ClinicRoute,
+} as any)
 const ClinicOnboardingRoute = ClinicOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicDoctorsRoute = ClinicDoctorsRouteImport.update({
+  id: '/doctors',
+  path: '/doctors',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicAppointmentsRoute = ClinicAppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
   getParentRoute: () => ClinicRoute,
 } as any)
 const CSlugRoute = CSlugRouteImport.update({
@@ -160,7 +202,14 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/book/$doctorId': typeof BookDoctorIdRoute
   '/c/$slug': typeof CSlugRoute
+  '/clinic/appointments': typeof ClinicAppointmentsRoute
+  '/clinic/doctors': typeof ClinicDoctorsRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/clinic/reviews': typeof ClinicReviewsRoute
+  '/clinic/schedules': typeof ClinicSchedulesRoute
+  '/clinic/services': typeof ClinicServicesRoute
+  '/clinic/settings': typeof ClinicSettingsRoute
+  '/clinic/staff': typeof ClinicStaffRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
@@ -182,7 +231,14 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/book/$doctorId': typeof BookDoctorIdRoute
   '/c/$slug': typeof CSlugRoute
+  '/clinic/appointments': typeof ClinicAppointmentsRoute
+  '/clinic/doctors': typeof ClinicDoctorsRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/clinic/reviews': typeof ClinicReviewsRoute
+  '/clinic/schedules': typeof ClinicSchedulesRoute
+  '/clinic/services': typeof ClinicServicesRoute
+  '/clinic/settings': typeof ClinicSettingsRoute
+  '/clinic/staff': typeof ClinicStaffRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
@@ -207,7 +263,14 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/book/$doctorId': typeof BookDoctorIdRoute
   '/c/$slug': typeof CSlugRoute
+  '/clinic/appointments': typeof ClinicAppointmentsRoute
+  '/clinic/doctors': typeof ClinicDoctorsRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/clinic/reviews': typeof ClinicReviewsRoute
+  '/clinic/schedules': typeof ClinicSchedulesRoute
+  '/clinic/services': typeof ClinicServicesRoute
+  '/clinic/settings': typeof ClinicSettingsRoute
+  '/clinic/staff': typeof ClinicStaffRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
@@ -233,7 +296,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/book/$doctorId'
     | '/c/$slug'
+    | '/clinic/appointments'
+    | '/clinic/doctors'
     | '/clinic/onboarding'
+    | '/clinic/reviews'
+    | '/clinic/schedules'
+    | '/clinic/services'
+    | '/clinic/settings'
+    | '/clinic/staff'
     | '/patient/appointments'
     | '/patient/favorites'
     | '/patient/profile'
@@ -255,7 +325,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/book/$doctorId'
     | '/c/$slug'
+    | '/clinic/appointments'
+    | '/clinic/doctors'
     | '/clinic/onboarding'
+    | '/clinic/reviews'
+    | '/clinic/schedules'
+    | '/clinic/services'
+    | '/clinic/settings'
+    | '/clinic/staff'
     | '/patient/appointments'
     | '/patient/favorites'
     | '/patient/profile'
@@ -279,7 +356,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/book/$doctorId'
     | '/c/$slug'
+    | '/clinic/appointments'
+    | '/clinic/doctors'
     | '/clinic/onboarding'
+    | '/clinic/reviews'
+    | '/clinic/schedules'
+    | '/clinic/services'
+    | '/clinic/settings'
+    | '/clinic/staff'
     | '/patient/appointments'
     | '/patient/favorites'
     | '/patient/profile'
@@ -441,11 +525,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatientAppointmentsRouteImport
       parentRoute: typeof PatientRoute
     }
+    '/clinic/staff': {
+      id: '/clinic/staff'
+      path: '/staff'
+      fullPath: '/clinic/staff'
+      preLoaderRoute: typeof ClinicStaffRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/settings': {
+      id: '/clinic/settings'
+      path: '/settings'
+      fullPath: '/clinic/settings'
+      preLoaderRoute: typeof ClinicSettingsRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/services': {
+      id: '/clinic/services'
+      path: '/services'
+      fullPath: '/clinic/services'
+      preLoaderRoute: typeof ClinicServicesRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/schedules': {
+      id: '/clinic/schedules'
+      path: '/schedules'
+      fullPath: '/clinic/schedules'
+      preLoaderRoute: typeof ClinicSchedulesRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/reviews': {
+      id: '/clinic/reviews'
+      path: '/reviews'
+      fullPath: '/clinic/reviews'
+      preLoaderRoute: typeof ClinicReviewsRouteImport
+      parentRoute: typeof ClinicRoute
+    }
     '/clinic/onboarding': {
       id: '/clinic/onboarding'
       path: '/onboarding'
       fullPath: '/clinic/onboarding'
       preLoaderRoute: typeof ClinicOnboardingRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/doctors': {
+      id: '/clinic/doctors'
+      path: '/doctors'
+      fullPath: '/clinic/doctors'
+      preLoaderRoute: typeof ClinicDoctorsRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/appointments': {
+      id: '/clinic/appointments'
+      path: '/appointments'
+      fullPath: '/clinic/appointments'
+      preLoaderRoute: typeof ClinicAppointmentsRouteImport
       parentRoute: typeof ClinicRoute
     }
     '/c/$slug': {
@@ -466,12 +599,26 @@ declare module '@tanstack/react-router' {
 }
 
 interface ClinicRouteChildren {
+  ClinicAppointmentsRoute: typeof ClinicAppointmentsRoute
+  ClinicDoctorsRoute: typeof ClinicDoctorsRoute
   ClinicOnboardingRoute: typeof ClinicOnboardingRoute
+  ClinicReviewsRoute: typeof ClinicReviewsRoute
+  ClinicSchedulesRoute: typeof ClinicSchedulesRoute
+  ClinicServicesRoute: typeof ClinicServicesRoute
+  ClinicSettingsRoute: typeof ClinicSettingsRoute
+  ClinicStaffRoute: typeof ClinicStaffRoute
   ClinicIndexRoute: typeof ClinicIndexRoute
 }
 
 const ClinicRouteChildren: ClinicRouteChildren = {
+  ClinicAppointmentsRoute: ClinicAppointmentsRoute,
+  ClinicDoctorsRoute: ClinicDoctorsRoute,
   ClinicOnboardingRoute: ClinicOnboardingRoute,
+  ClinicReviewsRoute: ClinicReviewsRoute,
+  ClinicSchedulesRoute: ClinicSchedulesRoute,
+  ClinicServicesRoute: ClinicServicesRoute,
+  ClinicSettingsRoute: ClinicSettingsRoute,
+  ClinicStaffRoute: ClinicStaffRoute,
   ClinicIndexRoute: ClinicIndexRoute,
 }
 
