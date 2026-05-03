@@ -1,12 +1,13 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
-import { Header, Footer } from "@/components/SiteChrome";
+import { createFileRoute, Outlet, Navigate } from "@tanstack/react-router";
 import { useAuth, useIsAdmin } from "@/lib/auth/AuthProvider";
+import { DashShell } from "@/components/DashShell";
+import { Header, Footer } from "@/components/SiteChrome";
 import { Card } from "@/components/ui/card";
-import { ShieldAlert } from "lucide-react";
+import { LayoutDashboard, Building2, Users2, ShieldAlert, Star, FileText } from "lucide-react";
 
-export const Route = createFileRoute("/admin")({ component: AdminHome });
+export const Route = createFileRoute("/admin")({ component: AdminLayout });
 
-function AdminHome() {
+function AdminLayout() {
   const { user, loading } = useAuth();
   const isAdmin = useIsAdmin();
   if (loading) return null;
@@ -30,14 +31,18 @@ function AdminHome() {
       </div>
     );
   }
+
+  const nav = [
+    { to: "/admin", label: "Overview", icon: LayoutDashboard },
+    { to: "/admin/clinics", label: "Clinics", icon: Building2 },
+    { to: "/admin/users", label: "Users", icon: Users2 },
+    { to: "/admin/reviews", label: "Reviews", icon: Star },
+    { to: "/admin/audit", label: "Audit log", icon: FileText },
+  ];
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="container mx-auto flex-1 px-4 py-10">
-        <h1 className="text-3xl font-bold tracking-tight">Admin dashboard</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Platform-wide management — clinics, users, content, and settings.</p>
-      </main>
-      <Footer />
-    </div>
+    <DashShell title="Admin" subtitle="Platform management" nav={nav}>
+      <Outlet />
+    </DashShell>
   );
 }
