@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, Navigate, Link } from "@tanstack/react-router";
+import { createFileRoute, Outlet, Navigate, Link, useRouterState } from "@tanstack/react-router";
 import { useAuth, useIsAdmin, useIsClinicUser } from "@/lib/auth/AuthProvider";
 import { DashShell } from "@/components/DashShell";
 import { LayoutDashboard, Users2, Stethoscope, Calendar, Clock, Star, Settings, Mail } from "lucide-react";
@@ -21,8 +21,21 @@ function ClinicLayout() {
     enabled: !!user,
   });
 
+  const path = useRouterState({ select: (s) => s.location.pathname });
+
   if (loading || isLoading) return null;
   if (!user) return <Navigate to="/login" />;
+
+  // Onboarding renders standalone (no clinic yet)
+  if (path === "/clinic/onboarding") {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    );
+  }
 
   if (!isClinic && !isAdmin && !clinic) {
     return (
