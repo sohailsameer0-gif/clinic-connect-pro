@@ -1,26 +1,48 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, Navigate, Link, useRouterState } from "@tanstack/react-router";
+import { useAuth, useIsAdmin, useIsClinicUser } from "@/lib/auth/AuthProvider";
+import { DashShell } from "@/components/DashShell";
+import { LayoutDashboard, Users2, Stethoscope, Calendar, Clock, Star, Settings, Mail } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getMyClinic } from "@/lib/data/queries";
 import { Header, Footer } from "@/components/SiteChrome";
-import { useAuth, useIsClinicUser } from "@/lib/auth/AuthProvider";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Building2 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/clinic")({ component: ClinicHome });
+export const Route = createFileRoute("/clinic")({ component: ClinicLayout });
 
-function ClinicHome() {
+function ClinicLayout() {
   const { user, loading } = useAuth();
   const isClinic = useIsClinicUser();
-  if (loading) return null;
+  const isAdmin = useIsAdmin();
+  const { data: clinic, isLoading } = useQuery({
+    queryKey: ["my-clinic"],
+    queryFn: getMyClinic,
+    enabled: !!user,
+  });
+
+  const path = useRouterState({ select: (s) => s.location.pathname });
+
+  if (loading || isLoading) return null;
   if (!user) return <Navigate to="/login" />;
 
-  return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="container mx-auto flex-1 px-4 py-10">
-        <h1 className="text-3xl font-bold tracking-tight">Clinic dashboard</h1>
-        {!isClinic ? (
-          <Card className="mt-6 p-10 text-center shadow-soft">
+  // Onboarding renders standalone (no clinic yet)
+  if (path === "/clinic/onboarding") {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!isClinic && !isAdmin && !clinic) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="container mx-auto flex flex-1 items-center justify-center px-4 py-20">
+          <Card className="max-w-md p-10 text-center shadow-elegant">
             <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary">
               <Building2 className="h-6 w-6" />
             </div>
@@ -32,11 +54,26 @@ function ClinicHome() {
               <Link to="/clinic/onboarding">Get started</Link>
             </Button>
           </Card>
-        ) : (
-          <p className="mt-4 text-sm text-muted-foreground">Your clinic management area — doctors, services, schedules, and bookings will appear here.</p>
-        )}
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const nav = [
+    { to: "/clinic", label: "Overview", icon: LayoutDashboard },
+    { to: "/clinic/appointments", label: "Appointments", icon: Calendar },
+    { to: "/clinic/doctors", label: "Doctors", icon: Stethoscope },
+    { to: "/clinic/services", label: "Services", icon: Users2 },
+    { to: "/clinic/schedules", label: "Schedules", icon: Clock },
+    { to: "/clinic/reviews", label: "Reviews", icon: Star },
+    { to: "/clinic/staff", label: "Staff", icon: Mail },
+    { to: "/clinic/settings", label: "Settings", icon: Settings },
+  ];
+
+  return (
+    <DashShell title={clinic?.name ?? "Clinic"} subtitle={clinic?.status ? `Status: ${clinic.status}` : undefined} nav={nav}>
+      <Outlet />
+    </DashShell>
   );
 }
