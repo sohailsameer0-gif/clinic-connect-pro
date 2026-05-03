@@ -23,7 +23,10 @@ import { Route as ClinicRouteImport } from './routes/clinic'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PatientIndexRouteImport } from './routes/patient.index'
 import { Route as PatientProfileRouteImport } from './routes/patient.profile'
+import { Route as PatientFavoritesRouteImport } from './routes/patient.favorites'
+import { Route as PatientAppointmentsRouteImport } from './routes/patient.appointments'
 import { Route as ClinicOnboardingRouteImport } from './routes/clinic.onboarding'
 
 const TermsRoute = TermsRouteImport.update({
@@ -96,9 +99,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PatientIndexRoute = PatientIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PatientRoute,
+} as any)
 const PatientProfileRoute = PatientProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => PatientRoute,
+} as any)
+const PatientFavoritesRoute = PatientFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => PatientRoute,
+} as any)
+const PatientAppointmentsRoute = PatientAppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
   getParentRoute: () => PatientRoute,
 } as any)
 const ClinicOnboardingRoute = ClinicOnboardingRouteImport.update({
@@ -123,7 +141,10 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/patient/appointments': typeof PatientAppointmentsRoute
+  '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
+  '/patient/': typeof PatientIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -135,13 +156,15 @@ export interface FileRoutesByTo {
   '/for-clinics': typeof ForClinicsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
-  '/patient': typeof PatientRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/patient/appointments': typeof PatientAppointmentsRoute
+  '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
+  '/patient': typeof PatientIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -160,7 +183,10 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/clinic/onboarding': typeof ClinicOnboardingRoute
+  '/patient/appointments': typeof PatientAppointmentsRoute
+  '/patient/favorites': typeof PatientFavoritesRoute
   '/patient/profile': typeof PatientProfileRoute
+  '/patient/': typeof PatientIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -180,7 +206,10 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/clinic/onboarding'
+    | '/patient/appointments'
+    | '/patient/favorites'
     | '/patient/profile'
+    | '/patient/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -192,13 +221,15 @@ export interface FileRouteTypes {
     | '/for-clinics'
     | '/forgot-password'
     | '/login'
-    | '/patient'
     | '/reset-password'
     | '/search'
     | '/signup'
     | '/terms'
     | '/clinic/onboarding'
+    | '/patient/appointments'
+    | '/patient/favorites'
     | '/patient/profile'
+    | '/patient'
   id:
     | '__root__'
     | '/'
@@ -216,7 +247,10 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/clinic/onboarding'
+    | '/patient/appointments'
+    | '/patient/favorites'
     | '/patient/profile'
+    | '/patient/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -336,11 +370,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/patient/': {
+      id: '/patient/'
+      path: '/'
+      fullPath: '/patient/'
+      preLoaderRoute: typeof PatientIndexRouteImport
+      parentRoute: typeof PatientRoute
+    }
     '/patient/profile': {
       id: '/patient/profile'
       path: '/profile'
       fullPath: '/patient/profile'
       preLoaderRoute: typeof PatientProfileRouteImport
+      parentRoute: typeof PatientRoute
+    }
+    '/patient/favorites': {
+      id: '/patient/favorites'
+      path: '/favorites'
+      fullPath: '/patient/favorites'
+      preLoaderRoute: typeof PatientFavoritesRouteImport
+      parentRoute: typeof PatientRoute
+    }
+    '/patient/appointments': {
+      id: '/patient/appointments'
+      path: '/appointments'
+      fullPath: '/patient/appointments'
+      preLoaderRoute: typeof PatientAppointmentsRouteImport
       parentRoute: typeof PatientRoute
     }
     '/clinic/onboarding': {
@@ -365,11 +420,17 @@ const ClinicRouteWithChildren =
   ClinicRoute._addFileChildren(ClinicRouteChildren)
 
 interface PatientRouteChildren {
+  PatientAppointmentsRoute: typeof PatientAppointmentsRoute
+  PatientFavoritesRoute: typeof PatientFavoritesRoute
   PatientProfileRoute: typeof PatientProfileRoute
+  PatientIndexRoute: typeof PatientIndexRoute
 }
 
 const PatientRouteChildren: PatientRouteChildren = {
+  PatientAppointmentsRoute: PatientAppointmentsRoute,
+  PatientFavoritesRoute: PatientFavoritesRoute,
   PatientProfileRoute: PatientProfileRoute,
+  PatientIndexRoute: PatientIndexRoute,
 }
 
 const PatientRouteWithChildren =
