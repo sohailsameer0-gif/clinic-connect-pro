@@ -38,22 +38,24 @@ function SignupPage() {
         data: { full_name: values.fullName, intended_role: values.role },
       },
     });
-    setSubmitting(false);
     if (error) {
+      setSubmitting(false);
       toast.error(error.message);
       return;
     }
     if (!data.session) {
-      toast.success("Check your email to verify your account.");
+      setSubmitting(false);
+      toast.success("Check your email to verify your account, then sign in.");
       navigate({ to: "/login" });
       return;
     }
-    toast.success("Account created!");
-    if (values.role === "clinic") {
-      navigate({ to: "/clinic/onboarding" });
-    } else {
-      navigate({ to: "/" });
+    // If the new user signed up as a clinic, grant clinic_owner role immediately
+    if (values.role === "clinic" && data.user) {
+      await supabase.from("user_roles").insert({ user_id: data.user.id, role: "clinic_owner" });
     }
+    setSubmitting(false);
+    toast.success("Account created!");
+    navigate({ to: values.role === "clinic" ? "/clinic/onboarding" : "/patient" });
   };
 
   const onGoogle = async () => {
