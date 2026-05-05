@@ -42,7 +42,7 @@ export const profileSchema = z.object({
 
 export const clinicSchema = z.object({
   name: z.string().trim().min(2).max(120),
-  clinic_type: z.enum(["dental", "general", "multi"]).default("general"),
+  clinic_type: z.enum(["dental", "general", "multi"]),
   tagline: z.string().trim().max(160).optional().or(z.literal("")),
   about: z.string().trim().max(2000).optional().or(z.literal("")),
   address: z.string().trim().max(240).optional().or(z.literal("")),
