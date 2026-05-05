@@ -49,9 +49,9 @@ function SignupPage() {
       navigate({ to: "/login" });
       return;
     }
-    // If the new user signed up as a clinic, grant clinic_owner role immediately
+    // If the new user signed up as a clinic, grant clinic_owner role immediately (ignore duplicate)
     if (values.role === "clinic" && data.user) {
-      await supabase.from("user_roles").insert({ user_id: data.user.id, role: "clinic_owner" });
+      await supabase.from("user_roles").upsert({ user_id: data.user.id, role: "clinic_owner" }, { onConflict: "user_id,role" });
     }
     setSubmitting(false);
     toast.success("Account created!");
