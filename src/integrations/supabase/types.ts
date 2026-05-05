@@ -176,6 +176,7 @@ export type Database = {
           address: string | null
           banner_url: string | null
           city: string | null
+          clinic_type: Database["public"]["Enums"]["clinic_type"]
           created_at: string
           email: string | null
           emergency_available: boolean
@@ -202,6 +203,7 @@ export type Database = {
           address?: string | null
           banner_url?: string | null
           city?: string | null
+          clinic_type?: Database["public"]["Enums"]["clinic_type"]
           created_at?: string
           email?: string | null
           emergency_available?: boolean
@@ -228,6 +230,7 @@ export type Database = {
           address?: string | null
           banner_url?: string | null
           city?: string | null
+          clinic_type?: Database["public"]["Enums"]["clinic_type"]
           created_at?: string
           email?: string | null
           emergency_available?: boolean
@@ -738,6 +741,7 @@ export type Database = {
         | "rescheduled"
         | "no_show"
       clinic_status: "pending" | "approved" | "suspended" | "rejected"
+      clinic_type: "dental" | "general" | "multi"
       gender: "male" | "female" | "other" | "prefer_not_to_say"
       notification_type:
         | "booking_created"
@@ -896,6 +900,7 @@ export const Constants = {
         "no_show",
       ],
       clinic_status: ["pending", "approved", "suspended", "rejected"],
+      clinic_type: ["dental", "general", "multi"],
       gender: ["male", "female", "other", "prefer_not_to_say"],
       notification_type: [
         "booking_created",
