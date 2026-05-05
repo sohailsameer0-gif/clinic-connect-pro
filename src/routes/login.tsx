@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { loginSchema, type LoginInput } from "@/lib/validation/schemas";
+import { resolvePostAuthPath } from "@/lib/auth/redirect";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Log in — MediBook" }] }),
@@ -26,14 +27,16 @@ function LoginPage() {
 
   const onSubmit = async (values: LoginInput) => {
     setSubmitting(true);
-    const { error } = await supabase.auth.signInWithPassword(values);
-    setSubmitting(false);
-    if (error) {
-      toast.error(error.message);
+    const { data, error } = await supabase.auth.signInWithPassword(values);
+    if (error || !data.user) {
+      setSubmitting(false);
+      toast.error(error?.message ?? "Sign in failed");
       return;
     }
+    const path = await resolvePostAuthPath(data.user.id);
+    setSubmitting(false);
     toast.success("Welcome back!");
-    navigate({ to: "/" });
+    navigate({ to: path });
   };
 
   const onGoogle = async () => {
@@ -45,7 +48,9 @@ function LoginPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/" });
+    const { data } = await supabase.auth.getUser();
+    const path = data.user ? await resolvePostAuthPath(data.user.id) : "/";
+    navigate({ to: path });
   };
 
   return (
